@@ -13,31 +13,33 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentSection = sections[index];
         currentSection.classList.add('active');
 
-        // UI Updates
         const val = currentSection.getAttribute('data-stability');
         const status = currentSection.getAttribute('data-status');
         fill.style.width = val + "%";
         statusText.innerText = `system status: ${status}`;
 
-        // Color shifts
+        // Dynamic Colors
         if (val <= 20) fill.style.background = "#ff3e3e";
         else if (val >= 80) fill.style.background = "#00ff41";
         else fill.style.background = "#ffffff";
 
-        // Sound & Hint
-        if (index > 0) navHint.style.opacity = "0"; 
+        // Hint Visibility
+        if (index > 0) navHint.style.opacity = "0";
+        else navHint.style.opacity = "0.5";
+
+        // Typewriter Sound
         clickSound.currentTime = 0;
         clickSound.play().catch(() => {});
     }
 
-    // KEYBOARD NAVIGATION
+    // Keyboard Controls
     document.addEventListener('keydown', (e) => {
-        if (e.key === "ArrowRight" || e.key === "ArrowDown" || e.key === " ") {
+        if (["ArrowRight", "ArrowDown", " "].includes(e.key)) {
             if (currentIndex < sections.length - 1) {
                 currentIndex++;
                 updateSection(currentIndex);
             }
-        } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        } else if (["ArrowLeft", "ArrowUp"].includes(e.key)) {
             if (currentIndex > 0) {
                 currentIndex--;
                 updateSection(currentIndex);
@@ -45,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // MOBILE SWIPE NAVIGATION
+    // Mobile Swipe Controls
     document.addEventListener('touchstart', e => {
         touchStartY = e.changedTouches[0].screenY;
     }, {passive: true});
@@ -53,13 +55,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('touchend', e => {
         let touchEndY = e.changedTouches[0].screenY;
         let deltaY = touchStartY - touchEndY;
-
-        if (Math.abs(deltaY) > 50) { // Threshold for swipe
+        if (Math.abs(deltaY) > 50) {
             if (deltaY > 0 && currentIndex < sections.length - 1) {
-                currentIndex++; // Swiped up
+                currentIndex++; 
                 updateSection(currentIndex);
             } else if (deltaY < 0 && currentIndex > 0) {
-                currentIndex--; // Swiped down
+                currentIndex--; 
                 updateSection(currentIndex);
             }
         }
