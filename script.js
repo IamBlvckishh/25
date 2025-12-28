@@ -12,16 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let touchStartY = 0;
     let idleTimer;
 
-    // Start Sequence
     startBtn.addEventListener('click', () => {
-        // Haptic & Audio Handshake
-        if (navigator.vibrate) navigator.vibrate([50, 50, 50]); // Initial pulse to wake up motor
+        // Unlock Audio for iOS
+        clickSound.play().then(() => { clickSound.pause(); clickSound.currentTime = 0; });
         
-        clickSound.play().then(() => { 
-            clickSound.pause(); 
-            clickSound.currentTime = 0; 
-        }).catch(e => console.log("Audio unlock failed"));
-
         gate.style.opacity = "0";
         setTimeout(() => {
             gate.style.display = "none";
@@ -32,36 +26,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateSection(index) {
         sections.forEach(s => s.classList.remove('active', 'focused'));
-        document.body.classList.remove('final-peace');
+        document.body.classList.remove('final-peace', 'vibe-ui');
 
         const currentSection = sections[index];
         currentSection.classList.add('active');
 
-        // Update Progress
-        const currentNum = (index + 1).toString().padStart(2, '0');
-        const totalNum = sections.length.toString().padStart(2, '0');
-        counter.innerText = `${currentNum} / ${totalNum}`;
+        // Update Counter
+        counter.innerText = `${(index + 1).toString().padStart(2, '0')} / ${sections.length.toString().padStart(2, '0')}`;
 
-        // Text reveal
+        // Reveal timing
         clearTimeout(idleTimer);
         idleTimer = setTimeout(() => currentSection.classList.add('focused'), 600);
 
         const val = currentSection.getAttribute('data-stability');
-        const status = currentSection.getAttribute('data-status');
         fill.style.width = val + "%";
-        statusText.innerText = `system status: ${status}`;
+        statusText.innerText = `system status: ${currentSection.getAttribute('data-status')}`;
 
-        // FORCED Haptics Logic
+        // Glitch Logic
         if (currentSection.classList.contains('mood-glitch')) {
-            aura.style.background = "radial-gradient(circle, rgba(255, 62, 62, 0.25) 0%, rgba(0,0,0,0) 70%)";
-            if (navigator.vibrate) {
-                // Heartbeat pattern: [vibe, pause, vibe, pause...]
-                navigator.vibrate([150, 100, 150, 400, 150, 100, 150]);
-            }
+            aura.style.background = "radial-gradient(circle, rgba(255, 62, 62, 0.15) 0%, rgba(0,0,0,0) 70%)";
+            document.body.classList.add('vibe-ui');
+            if (navigator.vibrate) navigator.vibrate([150, 100, 150]);
         } 
         else if (index === sections.length - 1) {
             document.body.classList.add('final-peace');
-            if (navigator.vibrate) navigator.vibrate(80);
         }
         else {
             aura.style.background = "radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, rgba(0,0,0,0) 70%)";
@@ -72,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clickSound.play().catch(() => {});
     }
 
-    // Navigation Buttons
+    // Nav Listeners
     document.getElementById('next-btn').addEventListener('click', () => {
         if (currentIndex < sections.length - 1) { currentIndex++; updateSection(currentIndex); }
     });
@@ -80,17 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentIndex > 0) { currentIndex--; updateSection(currentIndex); }
     });
 
-    // Keys
-    document.addEventListener('keydown', (e) => {
-        if (!document.body.classList.contains('started')) return;
-        if (["ArrowRight", "ArrowDown", " "].includes(e.key)) {
-            if (currentIndex < sections.length - 1) { currentIndex++; updateSection(currentIndex); }
-        } else if (["ArrowLeft", "ArrowUp"].includes(e.key)) {
-            if (currentIndex > 0) { currentIndex--; updateSection(currentIndex); }
-        }
-    });
-
-    // Swipe
     document.addEventListener('touchstart', e => touchStartY = e.changedTouches[0].screenY, {passive: true});
     document.addEventListener('touchend', e => {
         if (!document.body.classList.contains('started')) return;
