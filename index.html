@@ -8,19 +8,28 @@
 </head>
 <body>
 
+    <div id="interaction-gate">
+        <div class="gate-content">
+            <span class="label">system initializing...</span>
+            <p>this experience requires sound and haptics.</p>
+            <button id="start-btn">please click to begin</button>
+        </div>
+    </div>
+
     <div id="ui-layer">
         <div class="stability-group">
-            <span class="label" id="status-text">system status: stable</span>
+            <span class="label" id="status-text">system status: offline</span>
             <div class="bar-container">
                 <div id="stability-fill"></div>
             </div>
         </div>
     </div>
 
-    <div id="nav-hint" class="label">press arrows or swipe to begin</div>
+    <div id="nav-hint" class="label">press arrows or swipe to proceed</div>
+    <div id="progress-counter" class="label">00 / 00</div>
 
     <main id="main-container">
-        <section class="mood-neutral active" data-stability="100" data-status="online">
+        <section class="mood-neutral" data-stability="100" data-status="online">
             <div class="content">as the clock winds down on 2025, scrolling through the highlight reels and "year in review" posts, i’ve realized one thing: growth looks different for everyone. mine was nothing like what you’ve seen on your feed.</div>
         </section>
 
@@ -53,7 +62,7 @@
         </section>
 
         <section class="mood-rebuild" data-stability="75" data-status="building...">
-            <div class="content">i’ve gone back to my roots, learning to code again. through a lot of trial, error, and some heated "quarrels" with gemini, i’ve actually put out some really nice projects.i also discovered a deep interest in environment safety</div>
+            <div class="content">i’ve gone back to my roots, learning to code again. through a lot of trial, error, and some heated "quarrels" with gemini, i’ve actually put out some really nice projects. i also discovered a deep interest in environmental safety.</div>
         </section>
 
         <section class="mood-final" data-stability="100" data-status="online">
@@ -66,7 +75,7 @@
 
         <section class="mood-signature" data-stability="100" data-status="heartbeat">
             <div class="content center-text">
-            from the bottom of my heart,<br>
+                from the bottom of my heart,<br>
                 <span class="name">blvck</span>
             </div>
         </section>
@@ -75,7 +84,6 @@
     </main>
 
     <audio id="click-sound" src="https://www.fesliyanstudios.com/play-mp3/6" preload="auto"></audio>
-
     <script src="script.js"></script>
 </body>
 </html>
