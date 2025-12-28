@@ -12,7 +12,7 @@ body, html {
     color: var(--text);
     font-family: 'Courier New', monospace;
     overflow: hidden; 
-    touch-action: none; /* Prevents accidental browser refresh on swipe */
+    touch-action: none;
 }
 
 #interaction-gate {
@@ -29,59 +29,69 @@ body, html {
     font-family: inherit; text-transform: uppercase; letter-spacing: 2px;
 }
 
-/* UI Elements */
-#ui-layer, #nav-hint, #mobile-nav, main { opacity: 0; transition: opacity 1s ease; }
-.started #ui-layer, .started #nav-hint, .started #mobile-nav, .started main { opacity: 1; }
+/* UI Layers */
+#ui-layer, #mobile-nav, main { opacity: 0; transition: opacity 1s ease; }
+.started #ui-layer, .started #mobile-nav, .started main { opacity: 1; }
 
-#ui-layer { position: fixed; top: 40px; left: 40px; z-index: 100; }
+#ui-layer { position: fixed; top: 40px; left: 40px; z-index: 100; transition: transform 0.1s; }
 .bar-container { width: 150px; height: 4px; background: #222; margin-top: 8px; }
 #stability-fill { height: 100%; width: 100%; background: var(--text); transition: 1s ease; }
 .label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; opacity: 0.5; }
 
-/* Navigation & Counter */
+/* Navigation */
 #mobile-nav {
-    position: fixed;
-    bottom: 40px;
-    left: 0; width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    z-index: 1000;
+    position: fixed; bottom: 40px; left: 0; width: 100%;
+    display: flex; justify-content: space-around; align-items: center; z-index: 1000;
 }
-
 .nav-arrow {
-    background: none; border: none; color: #fff;
-    font-size: 24px; cursor: pointer; opacity: 0.3;
-    padding: 20px; transition: opacity 0.3s;
+    background: none; border: none; color: #fff; font-size: 28px;
+    cursor: pointer; opacity: 0.4; padding: 20px;
 }
-.nav-arrow:active { opacity: 1; color: var(--safe); }
 
-#nav-hint { position: fixed; bottom: 100px; left: 40px; }
+/* Main Content Styles */
+main { width: 100%; height: 100%; position: relative; display: flex; align-items: center; justify-content: center; }
+section { position: absolute; width: 100%; max-width: 800px; padding: 40px; opacity: 0; visibility: hidden; transition: opacity 0.8s; }
+section.active { opacity: 1; visibility: visible; }
+section .content { filter: blur(10px); opacity: 0; transition: 0.8s ease; transform: scale(0.98); }
+section.focused .content { filter: blur(0px); opacity: 1; transform: scale(1); }
 
-/* Sections */
+/* --- Subtle Visual Haptics (iOS Friendly) --- */
+.mood-glitch.active .content { 
+    animation: text-jitter 0.15s infinite; 
+    color: var(--danger); 
+    text-shadow: 2px 0px 0px rgba(255,0,0,0.3), -2px 0px 0px rgba(0,255,255,0.3);
+}
+
+.vibe-ui #ui-layer { animation: ui-jitter 0.1s infinite; }
+.vibe-ui #stability-fill { background: var(--danger) !important; }
+
+@keyframes text-jitter {
+    0% { transform: translate(0,0); }
+    33% { transform: translate(1px, -1px); }
+    66% { transform: translate(-1px, 1px); }
+    100% { transform: translate(0,0); }
+}
+
+@keyframes ui-jitter {
+    0% { transform: translate(0,0); }
+    50% { transform: translate(3px, 0); }
+    100% { transform: translate(0,0); }
+}
+
+/* Typography Extras */
+.huge { font-size: clamp(2rem, 8vw, 4rem); font-weight: 900; line-height: 1; margin: 20px 0; display: block; }
+.highlight { background: #fff; color: #000; padding: 2px 8px; }
+.name { font-size: 2.2rem; letter-spacing: 8px; display: block; margin-top: 20px; font-weight: bold; text-align: center;}
+
 #emotional-aura {
     position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
     width: 100vmax; height: 100vmax; z-index: -1; pointer-events: none;
     transition: background 2s ease;
 }
-
-.final-peace #emotional-aura {
-    background: radial-gradient(circle, rgba(255,255,255,0.18) 0%, rgba(0,0,0,1) 85%) !important;
-}
-
-main { width: 100%; height: 100%; position: relative; display: flex; align-items: center; justify-content: center; }
-section { position: absolute; width: 100%; max-width: 800px; padding: 40px; opacity: 0; visibility: hidden; transition: opacity 0.8s; display: flex; justify-content: center; align-items: center; text-align: left; }
-section.active { opacity: 1; visibility: visible; }
-
-section .content { filter: blur(10px); opacity: 0; transition: 0.8s ease; transform: scale(0.98); }
-section.focused .content { filter: blur(0px); opacity: 1; transform: scale(1); }
-
-.huge { font-size: clamp(2rem, 8vw, 4rem); font-weight: 900; line-height: 1; margin: 20px 0; display: block; }
-.name { font-size: 2.2rem; letter-spacing: 8px; display: block; margin-top: 20px; font-weight: bold; text-align: center;}
+.final-peace #emotional-aura { background: radial-gradient(circle, rgba(255,255,255,0.18) 0%, rgba(0,0,0,1) 85%) !important; }
 
 @media (max-width: 768px) {
     #ui-layer { top: 20px; left: 20px; }
     #mobile-nav { bottom: 20px; }
-    #nav-hint { display: none; }
     section { padding: 25px; }
 }
