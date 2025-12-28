@@ -3,55 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>25: a year of unbecoming</title>
+    <title>2025 // reflection</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div id="ui-layer">
-        <span class="label">stability status</span>
-        <div class="bar-container">
-            <div id="stability-fill"></div>
+        <div class="stability-group">
+            <span class="label" id="status-text">system status: stable</span>
+            <div class="bar-container">
+                <div id="stability-fill"></div>
+            </div>
         </div>
     </div>
 
-    <div class="scroll-hint">scroll to proceed</div>
+    <div id="nav-hint" class="label">press arrows or swipe to begin</div>
 
-    <main>
-        <section data-stability="100">
-            <div class="content">as the clock winds down on 2025... growth looks different for everyone. mine was nothing like what you’ve seen on your feed.</div>
+    <main id="main-container">
+        <section class="mood-neutral active" data-stability="100" data-status="stable">
+            <div class="content">25, a year. as the clock winds down, i realized: growth is a lot of things to a lot of people. mine was nothing like you have ever heard of.</div>
         </section>
 
-        <section data-stability="80">
-            <div class="content">i’m sitting here watching my screen dim... because i can’t quite find the words to capture everything this year took and gave. but i need to share this.</div>
+        <section class="mood-heavy" data-stability="20" data-status="critical failure">
+            <div class="content">the year kicked off with a thud. <br><span class="huge">i lost my job.</span><br>it killed my stability. the one thing that carried my plans was nowhere to be found.</div>
         </section>
 
-        <section data-stability="10">
-            <div class="content">the year kicked off with a thud. i lost my job. it killed my stability. i’m someone who lives by plans, and suddenly the roadmap was gone.</div>
+        <section class="mood-blur" data-stability="15" data-status="searching...">
+            <div class="content">i tried to force the crypto thing. perp dexes? the worst. i couldn’t ‘yap’ about projects i had no interest in. it felt alien.</div>
         </section>
 
-        <section data-stability="5">
-            <div class="content">i tried to force crypto. perp dexs? the worst. i went back on-chain, but the market never favored an <b>onoda</b> like me. that misalignment felt like a slow death.</div>
+        <section class="mood-heavy" data-stability="5" data-status="system overload">
+            <div class="content">i picked up cloud engineering. i ground through a semester, hoping to build the next big thing. but my mind was wandering. <span class="strike">you can’t force the flow when your head is not in it.</span></div>
         </section>
 
-        <section data-stability="15">
-            <div class="content">i dyed my hair. i hit the gym harder just to get rid of the numbness. but the void remained.</div>
+        <section class="mood-glitch" data-stability="0" data-status="total loss">
+            <div class="content">then, the vandals hit. <br>lost a farm. all the money. herdsmen. kidnapping. <br><b>20 million naira ransom or the wreckage.</b><br>i chose life.</div>
         </section>
 
-        <section data-stability="0">
-            <div class="content">then, the vandals hit. i lost an entire farm to herdsmen. it was a choice between the scraps or a 20 million naira ransom. i chose life.</div>
+        <section class="mood-rebuild" data-stability="40" data-status="rebooting...">
+            <div class="content">but this is still a year of growth. one valid lesson: <br><span class="highlight">you can just do things.</span></div>
         </section>
 
-        <section data-stability="40">
-            <div class="content">yet, i call this a year of growth. i’ve learned the most vital lesson: <b>you can just do things.</b> i'm starting a new farm, closer to home.</div>
+        <section class="mood-final" data-stability="100" data-status="online">
+            <div class="content">starting a new farm. learning to code. fighting with gemini. i found out i care about how the environment should be safe for people. 2025 tested every limit, but i am ending it stronger.</div>
         </section>
 
-        <section data-stability="70">
-            <div class="content">i’ve gone back to my roots, learning to code again. through heated "quarrels" with gemini, i’ve actually put out some really nice projects.</div>
-        </section>
-
-        <section data-stability="100">
-            <div class="content">2025 tested every limit, but i am ending it stronger, wiser, and carrying a quiet hope for 2026. i love you. see you then.</div>
+        <section class="mood-warm" data-stability="100" data-status="connected">
+            <div class="content final-message">if you have read this far, i love you so much. i’ll see you in 2026.</div>
         </section>
     </main>
 
